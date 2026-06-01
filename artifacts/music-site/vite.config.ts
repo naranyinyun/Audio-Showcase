@@ -4,38 +4,81 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
-const rawPort = process.env.PORT;
+// =======================
+// 1. 基础配置（安全默认值）
+// =======================
 
-if (!rawPort) {
-  throw new Error(
-    "PORT environment variable is required but was not provided.",
-  );
-}
+// ❗ 不再强制要求环境变量
+// 生产 / Vercel / Replit 都不会炸
 
-const port = Number(rawPort);
+const port = Number(process.env.PORT) || 5173;
+const basePath = process.env.BASE_PATH ?? "/";
 
-if (Number.isNaN(port) || port <= 0) {
-  throw new Error(`Invalid PORT value: "${rawPort}"`);
-}
+// =======================
+// 2. 条件插件（Replit 专用增强）
+// =======================
 
-const basePath = process.env.BASE_PATH;
+const isReplit =
+  process.env.NODE_ENV !== "production" &&
+  process.env.REPL_ID !== undefined;
 
-if (!basePath) {
-  throw new Error(
-    "BASE_PATH environment variable is required but was not provided.",
-  );
-}
+// =======================
+// 3. Vite Config
+// =======================
 
 export default defineConfig({
-  base: process.env.BASE_PATH ?? "/",
-  plugins: [...],
+  base: basePath,
+
+  plugins: [
+    react(),
+    tailwindcss(),
+    runtimeErrorOverlay(),
+
+    // 只在 Replit 开发环境启用
+    ...(isReplit
+      ? [
+          await import("@replit/vite-plugin-cartographer").then((m) =>
+            m.cartographer({
+              root: path.resolve(import.meta.dirname, ".."),
+            }),
+          ),
+          await import("@replit/vite-plugin-dev-banner").then((m) =>
+            m.devBanner(),
+          ),
+        ]
+      : []),
+  ],
+
+  resolve: {
+    alias: {
+      "@": path.resolve(import.meta.dirname, "src"),
+      "@assets": path.resolve(
+        import.meta.dirname,
+        "..",
+        "..",
+        "attached_assets",
+      ),
+    },
+    dedupe: ["react", "react-dom"],
+  },
+
+  root: path.resolve(import.meta.dirname),
+
+  build: {
+    outDir: path.resolve(import.meta.dirname, "dist"),
+    emptyOutDir: true,
+  },
+
   server: {
-    port: 5173,
+    port,
     strictPort: true,
     host: "0.0.0.0",
+    allowedHosts: true,
   },
+
   preview: {
-    port: 5173,
+    port,
     host: "0.0.0.0",
+    allowedHosts: true,
   },
 });
