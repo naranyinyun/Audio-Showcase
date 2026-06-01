@@ -1,0 +1,301 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ─── Site shell ─── */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0a0a0a;
+  color: #f0f0f0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+.site-root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header ─── */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.site-logo {
+  font-size: 1.1rem;
+  opacity: 0.5;
+}
+
+.site-title {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ─── Cards list ─── */
+
+.cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+
+/* ─── Music card ─── */
+
+.music-card {
+  background-color: var(--c-bg);
+  color: var(--c-fg);
+  transition: background-color 0.8s ease, color 0.8s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-inner {
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  min-height: 100dvh;
+}
+
+/* ─── Cover column ─── */
+
+.cover-col {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 3rem 4rem 4rem;
+  background-color: var(--c-bg-2);
+  transition: background-color 0.8s ease;
+}
+
+.cover-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1/1;
+}
+
+.cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+  position: relative;
+  z-index: 1;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 32px 80px rgba(0,0,0,0.6),
+    0 8px 24px rgba(0,0,0,0.4);
+}
+
+.cover-glow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 50% 50%, var(--c-accent), transparent 70%);
+  opacity: 0.18;
+  filter: blur(40px);
+  z-index: 0;
+  transition: background 0.8s ease, opacity 0.8s ease;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+/* ─── Info column ─── */
+
+.info-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem 5rem 5rem 4rem;
+  gap: 2rem;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.label-tag {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--c-accent);
+  transition: color 0.8s ease;
+  opacity: 0.9;
+}
+
+/* ─── Title block ─── */
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.album-name {
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--c-fg);
+  transition: color 0.8s ease;
+}
+
+.track-name {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--c-fg-dim);
+  transition: color 0.8s ease;
+  margin-top: 0.1rem;
+}
+
+.artist-name {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--c-fg-dim);
+  transition: color 0.8s ease;
+  opacity: 0.7;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Divider ─── */
+
+.divider {
+  width: 2.5rem;
+  height: 1px;
+  background: var(--c-border);
+  transition: background 0.8s ease;
+}
+
+/* ─── Reason block ─── */
+
+.reason-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 46ch;
+}
+
+.reason-label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-fg-dim);
+  transition: color 0.8s ease;
+  opacity: 0.6;
+}
+
+.reason-text {
+  font-size: 1rem;
+  line-height: 1.72;
+  color: var(--c-fg);
+  transition: color 0.8s ease;
+  opacity: 0.82;
+  font-weight: 300;
+}
+
+/* ─── Listen button ─── */
+
+.listen-block {
+  margin-top: 0.5rem;
+}
+
+.listen-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.6rem;
+  background: var(--c-accent);
+  color: #fff;
+  border-radius: 2px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: background 0.8s ease, opacity 0.2s ease, transform 0.2s ease;
+  mix-blend-mode: normal;
+}
+
+.listen-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.listen-btn:active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.listen-icon {
+  font-size: 0.65rem;
+  opacity: 0.9;
+}
+
+/* ─── Footer ─── */
+
+.site-footer {
+  padding: 2rem 3rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.04em;
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 900px) {
+  .card-inner {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .cover-col {
+    padding: 3rem 2rem 2rem;
+  }
+
+  .cover-wrap {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .info-col {
+    padding: 2.5rem 2rem 4rem;
+    gap: 1.5rem;
+  }
+
+  .album-name {
+    font-size: 2rem;
+  }
+
+  .site-header {
+    padding: 1.5rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cover-col {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .info-col {
+    padding: 1.5rem 1.5rem 3rem;
+  }
+
+  .site-header {
+    padding: 1.25rem 1.5rem;
+  }
+}

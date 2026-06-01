@@ -1,45 +1,67 @@
-# [Project name]
+# Music Presentation Site
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A static music curation site — each album gets a full-screen card with a cover-art-driven dynamic color system.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `pnpm --filter @workspace/music-site run dev` — run the site in dev mode
+- `pnpm --filter @workspace/music-site run build` — build for production (outputs to `dist/public/`)
+- `pnpm run typecheck` — full typecheck
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- React + Vite (static, no backend, no database)
+- Tailwind CSS
+- Color extraction: custom k-means pixel sampler (`src/hooks/useColorExtractor.ts`)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/music-site/src/data/music.ts` — **edit this to add/change music entries**
+- `artifacts/music-site/public/covers/` — place your album cover images here
+- `artifacts/music-site/src/hooks/useColorExtractor.ts` — dynamic color extraction from cover art
+- `artifacts/music-site/src/components/MusicCard.tsx` — single album card layout
+- `artifacts/music-site/src/pages/Home.tsx` — page that renders all cards
+- `artifacts/music-site/src/index.css` — all styles
+
+## How to add music
+
+1. Drop your cover image into `artifacts/music-site/public/covers/` (e.g. `my-album.jpg`)
+2. Open `artifacts/music-site/src/data/music.ts`
+3. Add an entry to the array:
+
+```ts
+{
+  id: "unique-id",
+  cover: "/covers/my-album.jpg",
+  artist: "Artist Name",
+  album: "Album Title",
+  track: "Optional Track Name",  // omit if presenting the whole album
+  reason: "Why you're presenting this — a few sentences.",
+  listenUrl: "https://open.spotify.com/...",
+  listenLabel: "Listen on Spotify",  // optional, defaults to "Listen Now"
+}
+```
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
-
-## Product
-
-_Describe the high-level user-facing capabilities of this app once they exist._
+- **Fully static** — no server, no database. All content lives in `src/data/music.ts`.
+- **Color extraction** runs client-side via a k-means pixel sampler on a 64×64 canvas downsample of the cover image. CORS restrictions may prevent extraction from some external URLs — prefer local images in `public/covers/`.
+- **One card per screen** — each entry occupies 100dvh, cover left, info right.
+- **Build/deploy workflow** — `pnpm build` produces a static bundle. Commit → build → deploy via Replit Publish.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Prefers static site, no backend
+- Prefers build/deploy workflow (commit → build → deploy), not a dynamic server
+- Framework: React + Vite (Astro not available in this environment)
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- External image URLs may block canvas pixel reads (CORS). Use local images in `public/covers/` for reliable color extraction.
+- The site title ("Music Worth Hearing") is in `src/pages/Home.tsx` — change it there.
+- After adding entries, `pnpm run typecheck` to verify before deploying.
 
 ## Pointers
 
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- See the `pnpm-workspace` skill for workspace structure and TypeScript details

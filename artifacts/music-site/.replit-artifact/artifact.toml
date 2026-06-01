@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Music Presentation"
+version = "1.0.0"
+id = "artifacts/music-site"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18361
+
+[services.development]
+run = "pnpm --filter @workspace/music-site run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/music-site", "run", "build" ]
+publicDir = "artifacts/music-site/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18361"
+BASE_PATH = "/"
