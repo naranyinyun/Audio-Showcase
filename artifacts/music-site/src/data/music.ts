@@ -25,23 +25,23 @@ export interface MusicEntry {
  */
 const music: MusicEntry[] = [
   {
-    id: "radiohead-kid-a",
-    cover: "https://picsum.photos/seed/kida/600/600",
-    artist: "Radiohead",
-    album: "Kid A",
+    id: "virtual-to-live",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/82/9f/c3/829fc3d8-033e-d3eb-500b-28cf55a727b3/859755220214_cover.jpg/300x300bb.webp",
+    artist: "nijisanji",
+    album: "Virtual to Live - Single",
     reason:
-      "A record that dissolved the boundary between electronic and rock — cold on the surface, devastatingly human underneath. Every listen reveals a new texture buried in the noise.",
-    listenUrl: "https://open.spotify.com/album/6GjwtEZcfenmOf6l18N7T7",
-    listenLabel: "Listen on Spotify",
+      "这首来自 2019 年彩虹社的歌曲以其全员合唱以及充满活力的活力而被选中。尽管我不是那个全盛时期的亲历者，但从这首歌中依然可以一窥当时的它带给大家的欢乐和活力。在我看来，他已经脱离了虚拟偶像的窠臼，成为了一个时期一个领域，小小的缩影。",
+    listenUrl: "https://music.apple.com/cn/song/virtual-to-live/1486320016",
+    listenLabel: "Listen on Apple Music",
   },
   {
-    id: "frank-ocean-blonde",
-    cover: "https://picsum.photos/seed/blonde/600/600",
-    artist: "Frank Ocean",
-    album: "Blonde",
+    id: "cool-me-down",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/5d/99/4c/5d994c94-798f-7eff-9b49-fd31719994a9/4511820-96136.jpg/300x300bb.webp",
+    artist: "Mwk、巡音ルカ",
+    album: "Cool Me Down - Single",
     reason:
-      "Fragmented and intimate — a stream of consciousness that feels less like an album and more like recovering a stranger's diary. The silences are as important as the notes.",
-    listenUrl: "https://music.apple.com/us/album/blonde/1146195596",
+      "这首来自 2023 年的歌曲巧妙地结合了 Vocaloid 和电子音乐。尽管声音并非出自真人，却自有着夏日晴空一般热烈的情感和动人的力量，正如标题和整首歌反复咏唱的 Cool Me Down 一样。",
+    listenUrl: "https://music.apple.com/cn/song/cool-me-down/1703764350",
     listenLabel: "Listen on Apple Music",
   },
 ];
